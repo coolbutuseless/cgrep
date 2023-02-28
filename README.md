@@ -1,0 +1,96 @@
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+# cgrep
+
+<!-- badges: start -->
+
+![](https://img.shields.io/badge/cool-useless-green.svg)
+<!-- badges: end -->
+
+`cgrep` is a package for highlighting character representations of R
+objects using regular expressions.
+
+## What’s in the box:
+
+- `cgrep()` for working directly on character strings
+- `cgrep_character()` matches against the `as.character()` output of the
+  object
+- `cgrep_deparse()` matches against the `deparse1()` output
+- `cgrep_print()` matches against the default `print()` output of the
+  object
+- `cgrep_str()` matches against the `str()` representation
+
+## Installation
+
+You can install from [GitHub](https://github.com/coolbutuseless/cgrep)
+with:
+
+``` r
+# install.package('remotes')
+remotes::install_github('coolbutuseless/cgrep')
+```
+
+## Example: Highlight a string in a data.frame
+
+``` r
+library(cgrep)
+
+mtcars |> 
+  head(20) |>
+  cgrep_print("Merc")
+```
+
+<img src="man/figures/df1.png" />
+
+### Highlight a row in a data.frame which matches a word
+
+``` r
+mtcars |> 
+  head(20) |>
+  cgrep_print("^.*wood.*?$", fg = 'blue', bg = 'hotpink')
+```
+
+<img src="man/figures/df2.png" />
+
+### Highlight text in a string
+
+``` r
+string <- 
+"<xml>
+   <this is='not'>a real XML doc</this>
+   <this is='not'>a real HTML doc</this>
+   <this is='not'>a real XML doc</this>
+   <this is='not'>a real XML doc</this>
+</xml>"
+
+cgrep(string, "html", ignore.case = TRUE)
+```
+
+<img src="man/figures/char1.png" />
+
+### Highlighting within a character vector
+
+``` r
+vals <- c('hello', 'there', '#rstats', 'on', 'mastodon')
+
+cgrep(vals, "rstats")
+```
+
+<img src="man/figures/vec_print.png" />
+
+``` r
+cgrep_deparse(vals, "rstats")
+```
+
+<img src="man/figures/vec_deparse.png" />
+
+## Related Software
+
+- [emphatic](https://github.com/coolbutuseless/emphatic)
+
+## Acknowledgements
+
+- R Core for developing and maintaining the language.
+- CRAN maintainers, for patiently shepherding packages onto CRAN and
+  maintaining the repository
